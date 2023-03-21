@@ -38,11 +38,17 @@ def run():
         text = Label(save_prompt, text='Please save your code')
         text.pack()
         return
-    command = f'python {file_path}'
+    external_libraries = ['numpy', 'pandas', 'matplotlib', 'scikit-learn','tkinter' ]
+
+
+    libraries = ' '.join(['-i ' + lib for lib in external_libraries]) # add all external libraries to command line arguments
+
+    command = f'python {file_path} {libraries}' # include libraries as an argument
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
     code_output.insert('1.0', output)
     code_output.insert('1.0',  error)
+
 
 
 menu_bar = Menu(compiler)
